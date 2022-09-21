@@ -19,7 +19,7 @@ class UrlCheckerController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $url = $form->get('url-string')->getData();
+            $url = $form->get('url')->getData();
             $keyword = $form->get('keyword')->getData();
             $urlResponseInfo = $urlChecker->checkUrl($url, $keyword);
 

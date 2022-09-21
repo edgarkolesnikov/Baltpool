@@ -13,7 +13,7 @@ class UrlInputFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('url-string', TextType::class)
+            ->add('url', TextType::class)
             ->add('keyword', TextType::class)
             ->add('submit', SubmitType::class)
         ;
