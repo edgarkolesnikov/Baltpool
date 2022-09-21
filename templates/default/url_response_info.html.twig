@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Response info{% endblock %}
+
+{% block body %}
+
+    <div class="example-wrapper">
+        <ul>
+            <li> Status Code: {{ response_info['statusCode'] }}</li>
+            <li> Redirects: {{ response_info['redirectsCount'] }}</li>
+            <li> Keywords Found: {{ response_info['keywordCount'] }}</li>
+        </ul>
+        <a href="{{ path('app_check') }}">Grizti atgal</a>
+    </div>
+{% endblock %}
