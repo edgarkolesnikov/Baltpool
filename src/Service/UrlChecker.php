@@ -25,21 +25,23 @@ class UrlChecker extends AbstractType
     #[ArrayShape(['statusCode' => "int", 'redirectsCount' => "int", 'keywordsCount' => 'string' ])]
     public function checkUrl(string $url, string $keyword): array
     {
+        //connecting to url provided in form
         $response = $this->httpClient->request(
             'GET',
             $url
         );
 
+        //collecting needed data from url
         $statusCode = $response->getStatusCode();
         $redirectsCount = $response->getInfo()['redirect_count'];
         $content = $response->getContent();
         $keywordsCount = substr_count($content, $keyword);
 
+        //returning array of collected data
         return [
             'statusCode' => $statusCode,
             'redirectsCount' => $redirectsCount,
             'keywordCount' => $keywordsCount
         ];
     }
-
 }

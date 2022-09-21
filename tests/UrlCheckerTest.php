@@ -8,6 +8,7 @@ use Symfony\Component\Panther\PantherTestCase;
 class UrlCheckerTest extends PantherTestCase
 {
 
+    //Checking /check page for status code and exact info on that page
     public function testPage(): void
     {
         $client = static::createClient();
@@ -16,6 +17,7 @@ class UrlCheckerTest extends PantherTestCase
         $this->assertSelectorTextContains('h1', 'Check');
     }
 
+    //Testing form submission, redirect, and link to come back to form page.
     public function testFormAndLink(): void
     {
         $client = static::createClient();
