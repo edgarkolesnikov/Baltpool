@@ -23,7 +23,7 @@ class UrlCheckerTest extends PantherTestCase
         $client = static::createClient();
         $crawler = $client->request('GET', '/check');
         $form = $crawler->selectButton('Submit')->form();
-        $form['url_input_form[url]'] = "https://github.com/symfony/panther";
+        $form['url_input_form[url]'] = "https://symfony.com/";
         $form['url_input_form[keyword]'] = 'Symfony';
         $crawler = $client->submit($form);
         $crawler = $client->followRedirect();

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Service;
-
 
 use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\Form\AbstractType;
@@ -22,9 +20,10 @@ class UrlChecker extends AbstractType
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
      */
-    #[ArrayShape(['statusCode' => "int", 'redirectsCount' => "int", 'keywordsCount' => 'string' ])]
+    #[ArrayShape(['statusCode' => "int", 'redirectsCount' => "int", 'keywordsCount' => 'int' ])]
     public function checkUrl(string $url, string $keyword): array
     {
+        try{
         //connecting to url provided in form
         $response = $this->httpClient->request(
             'GET',
@@ -43,5 +42,8 @@ class UrlChecker extends AbstractType
             'redirectsCount' => $redirectsCount,
             'keywordCount' => $keywordsCount
         ];
+        } catch (TransportExceptionInterface $e){
+            return [];
+        }
     }
 }

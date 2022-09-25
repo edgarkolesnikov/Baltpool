@@ -3,6 +3,12 @@
 {% block title %}Hello DefaultController!{% endblock %}
 
 {% block body %}
+
+    {% for message in app.flashes('empty') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
     <h1 title="Check">Check your Url</h1>
     <div class="center">
         <div class="example-wrapper">

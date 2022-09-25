@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 class UrlCheckerController extends AbstractController
 {
 
@@ -20,19 +19,25 @@ class UrlCheckerController extends AbstractController
         $form = $this->createForm(UrlInputFormType::class);
         $form->handleRequest($request);
 
+
         //Checking if form was submitted and data is valid for next steps
         if ($form->isSubmitted() && $form->isValid()) {
             $url = $form->get('url')->getData();
             $keyword = $form->get('keyword')->getData();
             $urlResponseInfo = $urlChecker->checkUrl($url, $keyword);
+            if(empty($urlResponseInfo)){
+                $this->addFlash('empty', 'Please provide valid URL');
+                $referer = $request->headers->get('referer');
+                return $this->redirect($referer);
+            }
 
             //passing data in json
-            return $this->redirectToRoute('app_url_response_info',
-                ['urlResponseInfo' => json_encode($urlResponseInfo), 'keyword' => $keyword]);
+            return $this->render('app_url_response_info',
+                ['urlResponseInfo' => json_encode($urlResponseInfo)]);
         }
 
         //passing data to the template
-        return $this->render('default/index.html.twig', [
+        return $this->render('url/index.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -44,7 +49,7 @@ class UrlCheckerController extends AbstractController
         //decoding received data and sending to template
         $urlResponseInfo = json_decode($urlResponseInfo, true);
 
-        return $this->render('default/url_response_info.html.twig', [
+        return $this->render('url/url_response_info.html.twig', [
             'response_info' => $urlResponseInfo
         ]);
     }
